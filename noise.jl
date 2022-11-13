@@ -10,10 +10,10 @@ const G::Vector{Vector{Float64}} = [
     [-1,1]./ (√2),
     [1,-1]./ (√2),
     [-1,-1]./ (√2),
-    [1,0],
-    [0,1],
-    [-1,0],
-    [0,-1]
+    [1.,0.],
+    [0.,1.],
+    [-1.,0.],
+    [0.,-1.]
 ]
 
 """
@@ -34,7 +34,7 @@ function select_gradient(xn::Int64,yn::Int64,l::Int64,seed::Int64)::Array{Float6
     xp::Int64 = (xn/l)+1
     yp::Int64 = (yn/l)+1
     Random.seed!(seed)
-    perm = shuffle(1:xp*yp)
+    perm = shuffle(0:(xp*yp)-1)
     #now to choose vectors at latice coordinates we just pick out G[i%8]
     grads = zeros(xp,yp,2)
     k = 1
@@ -124,8 +124,8 @@ function perlin_mesh(xn::Int64,yn::Int64,l::Int64,p::Float64,k::Int64;seed::Int6
     perlin = copy(noise)
     for i in 1:k
         #shuffle the indices accordingly
-        x_shuff = ( ( 2^i .* 0:xn-1 ) .% xn ) .+ 1
-        y_shuff = ( ( 2^i .* 0:yn-1 ) .% yn ) .+ 1
+        x_shuff = ( ( 2^i .* (0:xn-1) ) .% xn ) .+ 1
+        y_shuff = ( ( 2^i .* (0:yn-1) ) .% yn ) .+ 1
         #calculate the new noise term
         perlin += p^i .* noise[x_shuff,y_shuff]
     end

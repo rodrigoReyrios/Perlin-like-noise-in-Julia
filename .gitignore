@@ -1,0 +1,5 @@
+media/*
+anim.py
+.ipynb_checkpoints/*
+__pycache__/*
+figs/*.svg
